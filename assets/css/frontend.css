@@ -1,0 +1,211 @@
+.formnova-wrapper {
+    max-width: 700px;
+    margin: 30px auto;
+    padding: 30px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+}
+
+.formnova-wrapper form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.formnova-field {
+    display: flex;
+    flex-direction: column;
+}
+
+.formnova-field label {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #111827;
+}
+
+.formnova-required {
+    color: red;
+    margin-left: 4px;
+}
+
+.formnova-field input,
+.formnova-field textarea,
+.formnova-field select {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    background: #fff;
+    font-size: 15px;
+    transition: all 0.25s ease;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.formnova-field input:focus,
+.formnova-field textarea:focus,
+.formnova-field select:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+.formnova-field textarea {
+    min-height: 140px;
+    resize: vertical;
+}
+
+.formnova-field small {
+    display: block;
+    margin-top: 2px;
+    font-size: 12px;
+    color: #08090a;
+    font-weight: 700;
+}
+
+.formnova-checkbox-group,
+.formnova-radio-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.formnova-checkbox-group label,
+.formnova-radio-group label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    margin: 0;
+}
+
+.formnova-checkbox-group input,
+.formnova-radio-group input {
+    width: auto;
+}
+
+.formnova-file-box {
+    padding: 14px;
+    border: 2px dashed #d1d5db;
+    border-radius: 8px;
+    background: #fafafa;
+}
+
+.formnova-file-box input[type="file"] {
+    border: none;
+    padding: 0;
+    background: transparent;
+}
+
+.formnova-submit-btn {
+    padding: 14px 22px;
+    border: none;
+    border-radius: 8px;
+    background: #2563eb;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.25s ease;
+}
+
+.formnova-submit-btn:hover {
+    transform: translateY(-2px);
+    opacity: 0.95;
+}
+
+.formnova-submit-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.formnova-success-box {
+    padding: 14px 16px;
+    background: #ecfdf5;
+    border: 1px solid #10b981;
+    color: #065f46;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.formnova-error-box {
+    padding: 14px 16px;
+    background: #fef2f2;
+    border: 1px solid #ef4444;
+    color: #991b1b;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.formnova-field input[type="radio"],
+.formnova-field input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    vertical-align: middle;
+    flex-shrink: 0;
+    transform: none !important;
+    appearance: auto;
+}
+
+.formnova-option input[type="radio"]:focus,
+.formnova-option input[type="checkbox"]:focus,
+.formnova-option input[type="radio"]:active,
+.formnova-option input[type="checkbox"]:active {
+    outline: none;
+    box-shadow: none;
+    transform: none !important;
+}
+
+.formnova-option span {
+    line-height: 1.4;
+    display: inline-block;
+}
+
+.formnova-option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.formnova-field .formnova-field-error {
+    display: block;
+    margin-top: 6px;
+    color: #dc3232;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.formnova-recaptcha-wrap {
+    margin-top: 15px;
+}
+
+.formnova-captcha-error .formnova-field-error {
+    display: block;
+    margin-top: 6px;
+    color: #dc3232;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+@media (max-width: 768px) {
+    .formnova-wrapper {
+        padding: 20px;
+        margin: 15px;
+    }
+
+    .formnova-field input,
+    .formnova-field textarea,
+    .formnova-field select {
+        font-size: 14px;
+    }
+
+    .formnova-submit-btn {
+        width: 100%;
+    }
+}

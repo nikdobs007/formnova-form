@@ -1,0 +1,473 @@
+.formnova-builder {
+    display: flex;
+    gap: 24px;
+    margin-top: 20px;
+    align-items: flex-start;
+}
+
+.formnova-left {
+    width: 45%;
+}
+
+.formnova-right {
+    width: 55%;
+}
+
+.formnova-tab {
+    background: #ffffff;
+    padding: 24px;
+    border: 1px solid #e5e7eb;
+    border-top: 0;
+    border-radius: 0 0 12px 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, .04);
+}
+
+div#formnova-form-editor h2.nav-tab-wrapper {
+    padding-bottom: 0;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+div#formnova-form-editor h2.nav-tab-wrapper .nav-tab {
+    background: #f8fafc;
+    color: #374151;
+    border: 1px solid #e5e7eb;
+    border-bottom: 0;
+    padding: 10px 18px;
+    transition: .2s ease;
+}
+
+div#formnova-form-editor h2.nav-tab-wrapper .nav-tab-active,
+div#formnova-form-editor h2.nav-tab-wrapper .nav-tab:hover {
+    background: #ffffff;
+    color: #111827;
+    border-bottom-color: #ffffff;
+}
+
+div#formnova-form-editor h2.nav-tab-wrapper .nav-tab-active:focus {
+    box-shadow: none !important;
+}
+
+#titlediv #formnova-form-title {
+    padding: 10px 14px;
+    font-size: 24px;
+    line-height: 1.4;
+    width: 100%;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    outline: none;
+    background: #ffffff;
+    transition: .2s ease;
+}
+
+#titlediv #formnova-form-title:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, .12);
+}
+
+#titlediv .inside p.description {
+    margin: 8px 2px 0;
+    color: #6b7280;
+}
+
+input#formnova-shortcode {
+    color: #ffffff;
+    background: #2563eb !important;
+    border: 0;
+    border-radius: 8px;
+    font-weight: 600;
+    text-align: center;
+}
+
+#formnova-field-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, .55);
+    z-index: 9999;
+    backdrop-filter: blur(4px);
+}
+
+.formnova-modal-content {
+    width: 620px;
+    background: #ffffff;
+    padding: 25px;
+    margin: 60px auto;
+    border-radius: 12px;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, .15);
+}
+
+.formnova-left .postbox {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, .04);
+}
+
+.formnova-field-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px;
+    border: 1px solid #e5e7eb;
+    background: #ffffff;
+    margin-bottom: 12px;
+    border-radius: 10px;
+    transition: .2s ease;
+}
+
+.formnova-field-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, .06);
+}
+
+.formnova-field-card strong {
+    min-width: 100px;
+    font-weight: 600;
+    color: #111827;
+}
+
+.formnova-field-card small {
+    flex: 1;
+    text-align: center;
+    color: #6b7280;
+    font-size: 13px;
+}
+
+.field-meta {
+    color: #6b7280;
+    font-size: 13px;
+}
+
+.required-badge {
+    display: inline-block;
+    padding: 4px 8px;
+    background: #dc2626;
+    color: #fff;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.formnova-field-card span {
+    margin-left: auto;
+    display: flex;
+    gap: 8px;
+}
+
+.formnova-field-card .button {
+    border-radius: 8px;
+}
+
+.formnova-sort-placeholder {
+    height: 64px;
+    border: 2px dashed #2563eb;
+    margin-bottom: 12px;
+    border-radius: 10px;
+    background: rgba(37, 99, 235, .04);
+}
+
+.formnova-save-bar {
+    padding: 18px 0;
+}
+
+.formnova-success {
+    margin-top: 16px;
+    padding: 14px 18px;
+    background: linear-gradient(135deg,
+            #ecfdf5 0%,
+            #f0fdf4 100%);
+    border: 1px solid #bbf7d0;
+    color: #166534;
+    border-radius: 10px;
+    font-weight: 500;
+    box-shadow: 0 8px 20px rgba(34, 197, 94, .08);
+}
+
+.form-table th {
+    font-weight: 600;
+    color: #111827;
+}
+
+.form-table td input,
+.form-table td textarea,
+.form-table td select {
+    border-radius: 8px !important;
+    border: 1px solid #d1d5db !important;
+}
+
+.form-table td input:focus,
+.form-table td textarea:focus,
+.form-table td select:focus {
+    border-color: #2563eb !important;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, .12) !important;
+}
+
+#formnova-add-field,
+#formnova-edit-form {
+    display: flex;
+    flex-direction: column;
+}
+
+#formnova-add-field label,
+#formnova-edit-form label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #111827;
+}
+
+#formnova-add-field input[type="text"],
+#formnova-add-field input[type="email"],
+#formnova-add-field input[type="number"],
+#formnova-add-field input[type="url"],
+#formnova-add-field textarea,
+#formnova-add-field select,
+#formnova-edit-form input[type="text"],
+#formnova-edit-form input[type="email"],
+#formnova-edit-form input[type="number"],
+#formnova-edit-form input[type="url"],
+#formnova-edit-form textarea,
+#formnova-edit-form select {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    background: #ffffff;
+    font-size: 14px;
+    transition: all .2s ease;
+    box-sizing: border-box;
+}
+
+#formnova-edit-form select,
+#formnova-add-field select {
+    max-width: 100%;
+    border-radius: 8px;
+    line-height: inherit;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 8 9 11 12 8'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    background-size: 16px;
+    padding-right: 42px;
+    cursor: pointer;
+}
+
+#formnova-edit-form select option,
+#formnova-add-field select option {
+    padding: 12px;
+    background: #fff;
+    color: #3858e9;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+#formnova-add-field textarea,
+#formnova-edit-form textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+#formnova-add-field input:focus,
+#formnova-add-field textarea:focus,
+#formnova-add-field select:focus,
+#formnova-edit-form input:focus,
+#formnova-edit-form textarea:focus,
+#formnova-edit-form select:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, .12);
+    outline: none;
+}
+
+#formnova-add-field .formnova-options-box,
+#formnova-edit-form .formnova-options-box {
+    padding: 14px;
+    border: 1px dashed #d1d5db;
+    border-radius: 8px;
+    background: #f9fafb;
+}
+
+#formnova-add-field .formnova-options-box small,
+#formnova-edit-form .formnova-options-box small {
+    display: block;
+    margin-top: 8px;
+    color: #6b7280;
+    font-size: 12px;
+}
+
+#formnova-add-field .formnova-checkbox-wrap,
+#formnova-edit-form .formnova-checkbox-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#formnova-add-field input[type="checkbox"],
+#formnova-add-field input[type="radio"],
+#formnova-edit-form input[type="checkbox"],
+#formnova-edit-form input[type="radio"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+#formnova-add-field .button-primary,
+#formnova-edit-form .button-primary {
+    padding: 5px 18px;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+#formnova-add-field .button-outline,
+#formnova-edit-form .button-outline,
+.formnova-mail-tags .formnova-copy-tag {
+    padding: 5px 18px;
+    border-radius: 8px;
+    font-weight: 600;
+    line-height: 2.92307692;
+    min-height: 40px;
+}
+
+#formnova-add-field .description,
+#formnova-edit-form .description {
+    color: #6b7280;
+    font-size: 13px;
+    margin-top: 4px;
+}
+
+.formnova-submission-wrap {
+    max-width: 900px;
+}
+
+.formnova-submission-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background: #fff;
+}
+
+.formnova-submission-table th,
+.formnova-submission-table td {
+    padding: 14px 16px;
+    border: 1px solid #ddd;
+    vertical-align: top;
+}
+
+.formnova-submission-table th {
+    width: 220px;
+    font-weight: 600;
+    background: #f8f9fa;
+    text-align: left;
+}
+
+.formnova-submission-table td {
+    background: #fff;
+    word-break: break-word;
+}
+
+.formnova-submission-table tr:nth-child(even) td {
+    background: #fcfcfc;
+}
+
+.formnova-submission-table a {
+    color: #2271b1;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.formnova-submission-table a:hover {
+    text-decoration: underline;
+}
+
+.formnova-file-preview {
+    margin-top: 12px;
+}
+
+.formnova-file-preview img {
+    max-width: 180px;
+    height: auto;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 4px;
+    background: #fff;
+}
+
+.formnova-file-id {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 12px;
+    color: #666;
+    background: #f5f5f5;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+.formnova-analytics-wrap {
+    max-width: 900px;
+}
+
+.formnova-analytics-title {
+    margin-bottom: 20px;
+    font-size: 28px;
+    font-weight: 600;
+}
+
+.formnova-analytics-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.formnova-analytics-table tr {
+    transition: background 0.2s ease;
+}
+
+.formnova-analytics-table tr:hover {
+    background: #f8f9fa;
+}
+
+.formnova-analytics-table th,
+.formnova-analytics-table td {
+    padding: 18px 20px;
+    border-bottom: 1px solid #eee;
+    text-align: left;
+}
+
+.formnova-analytics-table th {
+    width: 250px;
+    font-weight: 600;
+    color: #1d2327;
+    background: #f6f7f7;
+}
+
+.formnova-analytics-table td {
+    font-size: 16px;
+    font-weight: 500;
+    color: #2271b1;
+    background: #fff;
+}
+
+.formnova-analytics-table tr:last-child th,
+.formnova-analytics-table tr:last-child td {
+    border-bottom: none;
+}
+
+@media (max-width: 992px) {
+    .formnova-builder {
+        flex-direction: column;
+    }
+
+    .formnova-left,
+    .formnova-right {
+        width: 100%;
+    }
+
+    .formnova-modal-content {
+        width: 90%;
+    }
+}
