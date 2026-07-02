@@ -163,7 +163,7 @@ class FormNova_SubmissionController extends FormNova_BaseController
             }
 
             $value = isset($_POST[$field->name])
-                ? sanitize_text_field($_POST[$field->name])
+                ? $_POST[$field->name]
                 : '';
 
             if (is_array($value)) {
@@ -236,7 +236,7 @@ class FormNova_SubmissionController extends FormNova_BaseController
         foreach ($fields as $field) {
 
             $value = isset($_POST[$field->name])
-                ? sanitize_text_field($_POST[$field->name])
+                ? $_POST[$field->name]
                 : '';
 
             if (is_array($value)) {
@@ -312,7 +312,7 @@ class FormNova_SubmissionController extends FormNova_BaseController
             }
 
             $value = isset($_POST[$field->name])
-                ? sanitize_text_field($_POST[$field->name])
+                ? $_POST[$field->name]
                 : '';
 
             if (is_array($value)) {
@@ -746,7 +746,7 @@ class FormNova_SubmissionController extends FormNova_BaseController
             }
 
             $value = isset($_POST[$field->name])
-                ? sanitize_text_field($_POST[$field->name])
+                ? $_POST[$field->name]
                 : '';
 
             if (is_array($value)) {
@@ -847,7 +847,7 @@ class FormNova_SubmissionController extends FormNova_BaseController
 
             $all_fields .=
                 $field->label . ': ' .
-                $value . "\n";
+                $value . "<br>";
         }
 
         /*
@@ -894,6 +894,8 @@ class FormNova_SubmissionController extends FormNova_BaseController
             }
 
             if (is_array($value)) {
+                $value = array_filter($value);
+                $value = array_map('sanitize_text_field', $value);
                 $value = implode(', ', $value);
             }
 
@@ -913,7 +915,7 @@ class FormNova_SubmissionController extends FormNova_BaseController
             );
 
         $headers = [
-            'Content-Type: text/plain; charset=UTF-8'
+            'Content-Type: text/html; charset=UTF-8'
         ];
 
         if (!empty($settings['cc_email'])) {
@@ -960,12 +962,50 @@ class FormNova_SubmissionController extends FormNova_BaseController
                     'Thank you for your submission';
 
                 $message_user =
-                    str_replace(
-                        ['{form_title}', '{all_fields}'],
-                        [$form_title, $all_fields],
-                        $settings['message_user'] ??
-                        'Thank you for contacting us.'
+                    $settings['message_user'] ??
+                    'Thank you for contacting us.';
+
+                $message_user = str_replace(
+                    '{form_title}',
+                    $form_title,
+                    $message_user
+                );
+
+                foreach ($fields as $field) {
+
+                    $key = $field->name;
+
+                    if (!isset($data[$key])) {
+                        continue;
+                    }
+
+                    $value = $data[$key];
+
+                    if (
+                        $field->type === 'file' &&
+                        is_array($value)
+                    ) {
+                        $value = 'Attached';
+                    }
+
+                    if (is_array($value)) {
+                        $value = array_filter($value);
+                        $value = array_map('sanitize_text_field', $value);
+                        $value = implode(', ', $value);
+                    }
+
+                    $message_user = str_replace(
+                        '{' . $key . '}',
+                        $value,
+                        $message_user
                     );
+                }
+
+                $message_user = str_replace(
+                    '{all_fields}',
+                    $all_fields,
+                    $message_user
+                );
 
                 FormNova_Mailer::send(
                     $user_email,

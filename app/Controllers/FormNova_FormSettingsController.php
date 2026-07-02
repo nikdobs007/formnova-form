@@ -86,11 +86,11 @@ class FormNova_FormSettingsController extends FormNova_BaseController
                 wp_unslash($_POST['subject_user'] ?? '')
             ),
 
-            'message_admin' => wp_kses_post(
+            'message_admin' => sanitize_textarea_field(
                 wp_unslash($_POST['message_admin'] ?? '')
             ),
 
-            'message_user' => wp_kses_post(
+            'message_user' => sanitize_textarea_field(
                 wp_unslash($_POST['message_user'] ?? '')
             ),
             'send_user_email' => !empty($_POST['send_user_email']) ? 1 : 0,
