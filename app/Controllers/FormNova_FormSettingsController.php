@@ -51,6 +51,8 @@ class FormNova_FormSettingsController extends FormNova_BaseController
             ? sanitize_text_field(wp_unslash($_POST['admin_email']))
             : '';
 
+        $raw_admin_email = preg_replace('/\s*,\s*/', ',', $raw_admin_email);
+
         $admin_emails = array_filter(
             array_map(
                 'sanitize_email',

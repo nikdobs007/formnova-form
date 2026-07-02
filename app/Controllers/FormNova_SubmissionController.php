@@ -858,7 +858,15 @@ class FormNova_SubmissionController extends FormNova_BaseController
         $admin_emails = [];
 
         if (!empty($settings['admin_email'])) {
-            $admin_emails = (array) $settings['admin_email'];
+
+            if (is_array($settings['admin_email'])) {
+                $admin_emails = $settings['admin_email'];
+            } else {
+                $admin_emails = array_map(
+                    'trim',
+                    explode(',', $settings['admin_email'])
+                );
+            }
         }
 
         $subject_admin =
@@ -919,12 +927,16 @@ class FormNova_SubmissionController extends FormNova_BaseController
         ];
 
         if (!empty($settings['cc_email'])) {
-            $headers[] =
-                'Cc: ' .
-                implode(
-                    ',',
-                    (array) $settings['cc_email']
+
+            $cc_emails = is_array($settings['cc_email'])
+                ? $settings['cc_email']
+                : array_map(
+                    'trim',
+                    explode(',', $settings['cc_email'])
                 );
+
+            $headers[] =
+                'Cc: ' . implode(', ', $cc_emails);
         }
 
         FormNova_Mailer::send(

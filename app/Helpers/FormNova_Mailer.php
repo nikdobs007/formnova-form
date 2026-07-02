@@ -14,8 +14,8 @@ class FormNova_Mailer
         $attachments = []
     ) {
         $recipients = is_array($to)
-            ? $to
-            : explode(',', $to);
+            ? array_map('trim', $to)
+            : array_map('trim', explode(',', $to));
 
         $recipients = array_filter(
             array_map(
