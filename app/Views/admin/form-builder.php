@@ -291,30 +291,31 @@ $formnova_form_id = !empty($formnova_form->id) ? absint($formnova_form->id) : 0;
                                 ?>
 
                             </h2>
+                             <?php
+                             if (!empty($formnova_form->settings)) {
+                                 $formnova_form_settings = json_decode(
+                                     $formnova_form->settings,
+                                     true
+                                 );
 
+                                 if (!is_array($formnova_form_settings)) {
+                                     $formnova_form_settings = [];
+                                 }
+                             }
+                             ?>
                             <p>
                                 <label>
-                                    <input type="checkbox" name="captcha_enabled" value="1" <?php checked(
-                                        $formnova_form_settings['captcha_enabled'] ?? 0,
-                                        1
-                                    ); ?>>
+                                    <input 
+                                        type="checkbox"
+                                        name="captcha_enabled"
+                                        value="1"
+                                        <?php checked(
+                                            !empty($formnova_form_settings['captcha_enabled'])
+                                        ); ?>
+                                    >
                                     Enable Google reCAPTCHA
                                 </label>
                             </p>
-
-                            <?php
-                            $formnova_form_settings = [];
-                            if (!empty($formnova_form->settings)) {
-                                $formnova_form_settings = json_decode(
-                                    $formnova_form->settings,
-                                    true
-                                );
-
-                                if (!is_array($formnova_form_settings)) {
-                                    $formnova_form_settings = [];
-                                }
-                            }
-                            ?>
                             <table class="form-table">
                                 <tr>
                                     <th>Admin Email(s)</th>
@@ -352,25 +353,25 @@ $formnova_form_id = !empty($formnova_form->id) ? absint($formnova_form->id) : 0;
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>User Subject</th>
-                                    <td>
-                                        <input type="text" name="subject_user" class="regular-text"
-                                            value="<?php echo esc_attr($formnova_form_settings['subject_user'] ?? 'Thank you'); ?>">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>Available Mail Tags</th>
+                                <th>User Subject</th>
+                            <td>
+                                <input type="text" name="subject_user" class="regular-text"
+                                    value="<?php echo esc_attr($formnova_form_settings['subject_user'] ?? 'Thank you'); ?>">
+                            </td>
+                        </tr>
+                        <tr>
+                                <th>Available Mail Tags</th>
                                     <td>
                                         <div class="formnova-mail-tags">
                                             <?php if (!empty($formnova_fields)): ?>
-                                                <?php foreach ($formnova_fields as $formnova_field): ?>
-                                                    <button type="button" class="button formnova-copy-tag"
-                                                        data-tag="{<?php echo esc_attr($formnova_field->name); ?>}">
-                                                        {
-                                                        <?php echo esc_html($formnova_field->name); ?>
-                                                        }
-                                                    </button>
-                                                <?php endforeach; ?>
+                                                    <?php foreach ($formnova_fields as $formnova_field): ?>
+                                                            <button type="button" class="button formnova-copy-tag"
+                                                                data-tag="{<?php echo esc_attr($formnova_field->name); ?>}">
+                                                                {
+                                                                <?php echo esc_html($formnova_field->name); ?>
+                                                                }
+                                                            </button>
+                                                    <?php endforeach; ?>
                                             <?php endif; ?>
                                         </div>
                                         <p class="description">
@@ -404,66 +405,62 @@ $formnova_form_id = !empty($formnova_form->id) ? absint($formnova_form->id) : 0;
                                                 $formnova_form_settings['send_user_email'] ?? 0,
                                                 1
                                             ); ?>>
-                                            Enable
-                                        </label>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-
-                        <div id="preview-tab" class="formnova-tab" style="display:none;">
-                            <?php if (!empty($formnova_fields)): ?>
-                                <table class="widefat">
-                                    <thead>
-                                        <tr>
-                                            <th>Label</th>
-                                            <th>Type</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php foreach ($formnova_fields as $formnova_field): ?>
+                                        Enable
+                                    </label>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                <div id="preview-tab" class="formnova-tab" style="display:none;">
+                    <?php if (!empty($formnova_fields)): ?>
+                            <table class="widefat">
+                                        <thead>
+                                            <tr>
+                                        <th>Label</th>
+                                        <th>Type</th>
+                                    </tr>
+                                        </thead>
+                                        <tbody>
+                                    <?php foreach ($formnova_fields as $formnova_field): ?>
                                             <tr>
                                                 <td>
-                                                    <?php echo esc_html(
-                                                        $formnova_field->label
-                                                    ); ?>
-                                                </td>
-                                                <td>
-                                                    <?php echo esc_html(
-                                                        $formnova_field->type
-                                                    ); ?>
-                                                </td>
-                                            </tr>
-                                            <?php if ($formnova_field->type === 'file'): ?>
-
-                                                <tr class="formnova-file-meta">
-
+                                                            <?php echo esc_html(
+                                                                $formnova_field->label
+                                                            ); ?>
+                                            </td>
+                                            <td>
+                                                            <?php echo esc_html(
+                                                                $formnova_field->type
+                                                            ); ?>
+                                                        </td>
+                                        </tr>
+                                        <?php if ($formnova_field->type === 'file'): ?>
+                                                            <tr class="formnova-file-meta">
                                                     <td>Extensions</td>
-                                                    <td> <?php
-                                                    echo esc_html(
-                                                        $formnova_field->allowed_file_types
-                                                    );
-                                                    ?>
+                                                                <td> <?php
+                                                                echo esc_html(
+                                                                    $formnova_field->allowed_file_types
+                                                                );
+                                                                ?>
                                                     </td>
-                                                </tr>
-                                                <tr class="formnova-file-meta">
-
-                                                    <td>Max Size</td>
-                                                    <td> <?php
-                                                    echo absint(
-                                                        $formnova_field->max_file_size
-                                                    );
-                                                    ?> MB
-                                                    </td>
-                                                </tr>
-                                            <?php endif; ?>
-                                        <?php endforeach; ?>
-                                    </tbody>
-                                </table>
+                                                    </tr>
+                                                        <tr class="formnova-file-meta">
+                                                            <td>Max Size</td>
+                                                                <td> <?php
+                                                                echo absint(
+                                                                    $formnova_field->max_file_size
+                                                                );
+                                                                ?> MB
+                                                                </td>
+                                                            </tr>
+                                                    <?php endif; ?>
+                                            <?php endforeach; ?>
+                                        </tbody>
+                                    </table>
                             <?php else: ?>
-                                <p>
-                                    No fields available.
-                                </p>
+                                    <p>
+                                        No fields available.
+                                    </p>
                             <?php endif; ?>
                         </div>
 

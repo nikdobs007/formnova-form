@@ -1,0 +1,17 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: FormNova 1.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-23\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Domain: formnova-form\n"
+
+#: app/Views/admin/dashboard.php:10
+msgid "Dashboard"
+msgstr ""
+
+#: app/Views/admin/forms.php:20
+msgid "Add New Form"
+msgstr ""

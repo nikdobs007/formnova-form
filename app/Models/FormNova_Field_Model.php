@@ -23,10 +23,13 @@ class FormNova_Field_Model
 
         $fields = FormNova_Database::get_results(
             "SELECT *
-         FROM {$this->table}
-         WHERE form_id = %d
-         ORDER BY sort_order ASC, id ASC",
-            [$form_id],
+            FROM %i
+            WHERE form_id = %d
+            ORDER BY sort_order ASC, id ASC",
+            [
+                $this->table,
+                $form_id
+            ],
             'form_fields_' . $form_id
         );
 
@@ -34,7 +37,8 @@ class FormNova_Field_Model
             return [];
         }
 
-        $meta_model = new FormNova_FieldMetaModel();
+        $meta_model =
+            new FormNova_FieldMetaModel();
 
         foreach ($fields as &$field) {
 
@@ -46,7 +50,9 @@ class FormNova_Field_Model
                 continue;
             }
 
-            $meta = $meta_model->get($field->id);
+            $meta = $meta_model->get(
+                $field->id
+            );
 
             if (!$meta) {
                 continue;
@@ -59,7 +65,9 @@ class FormNova_Field_Model
                 $meta->allowed_mimes ?? '';
 
             $field->max_file_size =
-                absint($meta->max_file_size ?? 5);
+                absint(
+                    $meta->max_file_size ?? 5
+                );
         }
 
         unset($field);
@@ -189,17 +197,24 @@ class FormNova_Field_Model
 
     public function get($id)
     {
+        global $wpdb;
+
         $id = absint($id);
 
         if (!$id) {
             return false;
         }
 
+        $table = $this->table;
+
         $field = FormNova_Database::get_row(
             "SELECT *
-        FROM {$this->table}
-        WHERE id = %d",
-            [$id],
+            FROM %i
+            WHERE id = %d",
+            [
+                $this->table,
+                $id
+            ],
             'field_' . $id
         );
 
@@ -209,16 +224,19 @@ class FormNova_Field_Model
 
         if ($field->type === 'file') {
 
-            $meta_model = new FormNova_FieldMetaModel();
+            $meta_model =
+                new FormNova_FieldMetaModel();
 
-            $meta = $meta_model->get($field->id);
+            $meta =
+                $meta_model->get(
+                    $field->id
+                );
 
             $field->allowed_file_types = '';
             $field->allowed_mimes = '';
             $field->max_file_size = 5;
 
             if ($meta) {
-
                 $field->allowed_file_types =
                     $meta->allowed_file_types ?? '';
 
@@ -226,7 +244,9 @@ class FormNova_Field_Model
                     $meta->allowed_mimes ?? '';
 
                 $field->max_file_size =
-                    absint($meta->max_file_size ?? 5);
+                    absint(
+                        $meta->max_file_size ?? 5
+                    );
             }
         }
 
@@ -419,6 +439,8 @@ class FormNova_Field_Model
 
     public function delete_by_form($form_id)
     {
+        global $wpdb;
+
         $form_id = absint($form_id);
 
         if (!$form_id) {
@@ -427,9 +449,12 @@ class FormNova_Field_Model
 
         $field_ids = FormNova_Database::get_results(
             "SELECT id
-        FROM {$this->table}
-        WHERE form_id=%d",
-            [$form_id],
+            FROM %i
+            WHERE form_id = %d",
+            [
+                $this->table,
+                $form_id
+            ],
             'form_field_ids_' . $form_id
         );
 
@@ -542,6 +567,7 @@ class FormNova_Field_Model
         $form_id,
         $name
     ) {
+        global $wpdb;
 
         $form_id = absint($form_id);
         $name = sanitize_key($name);
@@ -552,10 +578,11 @@ class FormNova_Field_Model
 
         return FormNova_Database::get_var(
             "SELECT id
-                FROM {$this->table}
-                WHERE form_id=%d
-                AND name=%s",
+            FROM %i
+            WHERE form_id = %d
+            AND name = %s",
             [
+                $this->table,
                 $form_id,
                 $name
             ],

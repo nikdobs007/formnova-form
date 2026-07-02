@@ -580,9 +580,22 @@ class FormNova_AdminController extends FormNova_BaseController
                 $field['form_id'] = $form_id;
                 $field['sort_order'] = $index;
 
-                $field_id = absint(
-                    $field['id'] ?? 0
-                );
+                $field_id = absint($field['id'] ?? 0);
+
+                /*
+                 * Safety: if id missing but field name already exists,
+                 * update existing instead of creating duplicate
+                 */
+                if (!$field_id) {
+                    $existing = $this->field_model->field_name_exists(
+                        $form_id,
+                        $field['name']
+                    );
+
+                    if ($existing) {
+                        $field_id = absint($existing);
+                    }
+                }
 
                 $deleted_fields = json_decode(
                     sanitize_text_field(
@@ -715,9 +728,9 @@ class FormNova_AdminController extends FormNova_BaseController
         /*
          * Load Form
          */
-        $formnova_form  = $this->form_model->get($id);
+        $formnova_form = $this->form_model->get($id);
 
-        if (!$formnova_form ) {
+        if (!$formnova_form) {
 
             wp_die(
                 esc_html__(
@@ -747,7 +760,7 @@ class FormNova_AdminController extends FormNova_BaseController
 
                 $settings =
                     $this->form_model->get_settings(
-                        $formnova_form ->id
+                        $formnova_form->id
                     );
 
                 if (!is_array($settings)) {
@@ -768,7 +781,7 @@ class FormNova_AdminController extends FormNova_BaseController
 
         $formnova_fields =
             $field_model->get_by_form(
-                $formnova_form ->id
+                $formnova_form->id
             );
 
         if (!is_array($formnova_fields)) {
@@ -781,7 +794,7 @@ class FormNova_AdminController extends FormNova_BaseController
         $this->view(
             'admin/form-builder',
             [
-                'formnova_form' => $formnova_form ,
+                'formnova_form' => $formnova_form,
                 'formnova_fields' => $formnova_fields,
             ]
         );

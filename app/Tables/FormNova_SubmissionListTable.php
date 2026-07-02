@@ -185,7 +185,7 @@ class FormNova_SubmissionListTable extends WP_List_Table
 
         global $wpdb;
 
-        $table = $wpdb->prefix . 'formnova_submissions';
+        $table = FormNova_Database::submissions_table();
 
         $per_page = 20;
         $current_page = $this->get_pagenum();
@@ -214,22 +214,29 @@ class FormNova_SubmissionListTable extends WP_List_Table
 
         $where = '';
 
+        $table_sql = esc_sql($table);
+
         if (!empty($search)) {
-            $where = $wpdb->prepare(
-                ' WHERE form_id LIKE %s ',
-                '%' . $wpdb->esc_like($search) . '%'
+            $total_items = (int) FormNova_Database::get_var(
+                "SELECT COUNT(*)
+                FROM %i
+                WHERE form_id LIKE %s",
+                [
+                    $table,
+                    '%' . $wpdb->esc_like($search) . '%'
+                ]
+            );
+        } else {
+            $total_items = (int) FormNova_Database::get_var(
+                "SELECT COUNT(*)
+                FROM %i",
+                [
+                    $table
+                ]
             );
         }
 
-        $table_sql = esc_sql($table);
-
-        $total_items = (int) $wpdb->get_var(
-            "SELECT COUNT(*) FROM {$table_sql} {$where}"
-        );
-
         $offset = ($current_page - 1) * $per_page;
-
-        $table_sql = esc_sql($table);
 
         $allowed_orderby = ['id', 'submitted_at', 'form_id'];
         $allowed_order = ['ASC', 'DESC'];
@@ -242,19 +249,39 @@ class FormNova_SubmissionListTable extends WP_List_Table
             ? strtoupper($order)
             : 'DESC';
 
-        $this->items = $wpdb->get_results(
-            $wpdb->prepare(
+        if (!empty($search)) {
+            // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+            $this->items = FormNova_Database::get_results(
                 "
                 SELECT *
-                FROM {$table_sql}
-                {$where}
+                FROM %i
+                WHERE form_id LIKE %s
                 ORDER BY {$orderby} {$order}
                 LIMIT %d OFFSET %d
                 ",
-                $per_page,
-                $offset
-            )
-        );
+                [
+                    $table,
+                    '%' . $wpdb->esc_like($search) . '%',
+                    $per_page,
+                    $offset
+                ]
+            );
+        } else {
+            // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+            $this->items = FormNova_Database::get_results(
+                "
+                SELECT *
+                FROM %i
+                ORDER BY {$orderby} {$order}
+                LIMIT %d OFFSET %d
+                ",
+                [
+                    $table,
+                    $per_page,
+                    $offset
+                ]
+            );
+        }
 
         $this->set_pagination_args([
             'total_items' => $total_items,

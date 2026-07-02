@@ -162,7 +162,9 @@ class FormNova_SubmissionController extends FormNova_BaseController
                 break;
             }
 
-            $value = $_POST[$field->name] ?? '';
+            $value = isset($_POST[$field->name])
+                ? sanitize_text_field($_POST[$field->name])
+                : '';
 
             if (is_array($value)) {
                 $value = array_map(
@@ -233,7 +235,9 @@ class FormNova_SubmissionController extends FormNova_BaseController
          */
         foreach ($fields as $field) {
 
-            $value = $_POST[$field->name] ?? '';
+            $value = isset($_POST[$field->name])
+                ? sanitize_text_field($_POST[$field->name])
+                : '';
 
             if (is_array($value)) {
                 $value = array_map(
@@ -307,7 +311,9 @@ class FormNova_SubmissionController extends FormNova_BaseController
                 continue;
             }
 
-            $value = $_POST[$field->name] ?? '';
+            $value = isset($_POST[$field->name])
+                ? sanitize_text_field($_POST[$field->name])
+                : '';
 
             if (is_array($value)) {
                 $value = array_map(
@@ -505,7 +511,9 @@ class FormNova_SubmissionController extends FormNova_BaseController
                         isset($_FILES[$field->name]) &&
                         isset($_FILES[$field->name]['tmp_name'])
                     ) {
-                        $tmp_name = $_FILES[$field->name]['tmp_name'];
+                        $tmp_name = isset($_FILES[$field->name]['tmp_name'])
+                            ? sanitize_text_field($_FILES[$field->name]['tmp_name'])
+                            : '';
 
                         $wp_filetype = wp_check_filetype_and_ext(
                             $tmp_name,
@@ -605,7 +613,9 @@ class FormNova_SubmissionController extends FormNova_BaseController
                     /*
                      * Extra safety: prevent fake MIME large uploads
                      */
-                    $tmp_name = $_FILES[$field->name]['tmp_name'];
+                    $tmp_name = isset($_FILES[$field->name]['tmp_name'])
+                        ? sanitize_text_field($_FILES[$field->name]['tmp_name'])
+                        : '';
 
                     if (empty($tmp_name) || !is_uploaded_file($tmp_name)) {
                         $errors[$field->name] = __(
@@ -666,7 +676,9 @@ class FormNova_SubmissionController extends FormNova_BaseController
                         isset($_FILES[$field->name]) &&
                         is_array($_FILES[$field->name])
                     ) {
-                        $file = $_FILES[$field->name];
+                        $file = isset($_FILES[$field->name]) && is_array($_FILES[$field->name])
+                            ? array_map('sanitize_text_field', $_FILES[$field->name])
+                            : [];
                     }
 
                     $upload_overrides = [
@@ -733,7 +745,9 @@ class FormNova_SubmissionController extends FormNova_BaseController
                 continue;
             }
 
-            $value = $_POST[$field->name] ?? '';
+            $value = isset($_POST[$field->name])
+                ? sanitize_text_field($_POST[$field->name])
+                : '';
 
             if (is_array($value)) {
                 $value = array_map(

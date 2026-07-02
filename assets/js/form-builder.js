@@ -7,35 +7,20 @@ jQuery(function ($) {
 
     window.pendingFields =
         (window.pendingFields || []).map(function (field) {
-
             return {
-
-                id: field.id || 0,
-
+                id: parseInt(field.id) || 0,
+                temp_id: field.temp_id || '',
                 label: field.label || '',
-
                 name: field.name || '',
-
                 type: field.type || 'text',
-
                 placeholder: field.placeholder || '',
-
                 custom_class: field.custom_class || '',
-
                 options: field.options || '',
-
-                required: field.required || 0,
-
-                allowed_file_types:
-                    field.allowed_file_types || '',
-
-                allowed_mimes:
-                    field.allowed_mimes || '',
-
-                max_file_size:
-                    field.max_file_size || 5
+                required: parseInt(field.required) || 0,
+                allowed_file_types: field.allowed_file_types || '',
+                allowed_mimes: field.allowed_mimes || '',
+                max_file_size: field.max_file_size || 5
             };
-
         });
 
     window.deletedFields =
@@ -129,7 +114,7 @@ jQuery(function ($) {
             $('#formnova-edit-form [name=placeholder]').val(field.placeholder);
             $('#formnova-edit-form [name=custom_class]').val(field.custom_class || '');
             $('#formnova-edit-form [name=options]').val(field.options);
-            
+
             let optionsValue = field.options || '';
 
             if (Array.isArray(optionsValue)) {
@@ -435,40 +420,19 @@ jQuery(function ($) {
         $('#formnova-field-name-error').hide();
 
         window.pendingFields[index] = {
+            id: window.pendingFields[index].id || 0,
+            temp_id: window.pendingFields[index].temp_id || '',
 
-            ...window.pendingFields[index],
-
-            label:
-                $('#formnova-edit-form [name=label]').val(),
-
-            name:
-                $('#formnova-edit-form [name=name]').val(),
-
-            type:
-                $('#formnova-edit-form [name=type]').val(),
-
-            placeholder:
-                $('#formnova-edit-form [name=placeholder]').val(),
-
-            custom_class:
-                $('#formnova-edit-form [name=custom_class]').val(),
-
-            options:
-                $('#formnova-edit-form [name=options]').val(),
-
-            required:
-                $('#formnova-edit-form [name=required]').is(':checked')
-                    ? 1
-                    : 0,
-
-            allowed_file_types:
-                $('#formnova-edit-form [name=allowed_file_types]').val(),
-
-            allowed_mimes:
-                $('#formnova-edit-form [name=allowed_mimes]').val(),
-
-            max_file_size:
-                $('#formnova-edit-form [name=max_file_size]').val()
+            label: $('#formnova-edit-form [name=label]').val(),
+            name: $('#formnova-edit-form [name=name]').val(),
+            type: $('#formnova-edit-form [name=type]').val(),
+            placeholder: $('#formnova-edit-form [name=placeholder]').val(),
+            custom_class: $('#formnova-edit-form [name=custom_class]').val(),
+            options: $('#formnova-edit-form [name=options]').val(),
+            required: $('#formnova-edit-form [name=required]').is(':checked') ? 1 : 0,
+            allowed_file_types: $('#formnova-edit-form [name=allowed_file_types]').val(),
+            allowed_mimes: $('#formnova-edit-form [name=allowed_mimes]').val(),
+            max_file_size: $('#formnova-edit-form [name=max_file_size]').val()
         };
 
         $('#formnova-pending-fields').val(

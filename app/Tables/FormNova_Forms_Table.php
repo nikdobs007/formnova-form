@@ -16,8 +16,8 @@ class FormNova_Forms_Table extends WP_List_Table
     {
         parent::__construct([
             'singular' => 'form',
-            'plural'   => 'forms',
-            'ajax'     => false,
+            'plural' => 'forms',
+            'ajax' => false,
         ]);
 
         $this->form_model = new FormNova_Form_Model();
@@ -26,10 +26,10 @@ class FormNova_Forms_Table extends WP_List_Table
     public function get_columns()
     {
         return [
-            'cb'         => '<input type="checkbox">',
-            'title'      => 'Title',
-            'shortcode'  => 'Shortcode',
-            'author'     => 'Author',
+            'cb' => '<input type="checkbox">',
+            'title' => 'Title',
+            'shortcode' => 'Shortcode',
+            'author' => 'Author',
             'created_at' => 'Date',
         ];
     }
@@ -87,13 +87,13 @@ class FormNova_Forms_Table extends WP_List_Table
 
         global $wpdb;
 
-        $per_page     = 20;
+        $per_page = 20;
         $current_page = $this->get_pagenum();
-        $offset       = ($current_page - 1) * $per_page;
+        $offset = ($current_page - 1) * $per_page;
 
-        $search  = formnova_request('s');
+        $search = formnova_request('s');
         $orderby = formnova_request('orderby', 'get') ?: 'id';
-        $order   = strtoupper(
+        $order = strtoupper(
             formnova_request('order', 'get') ?: 'DESC'
         );
 
@@ -112,27 +112,29 @@ class FormNova_Forms_Table extends WP_List_Table
             $order = 'DESC';
         }
 
-        $table = $wpdb->prefix . 'formnova_forms';
+        $table = FormNova_Database::forms_table();
+        $users_table = $wpdb->users;
 
         $where = '';
         $values = [];
 
         if (!empty($search)) {
-            $where = 'WHERE f.title LIKE %s';
-            $values[] = '%' . $wpdb->esc_like($search) . '%';
-        }
-
-        // Total count query
-        if (!empty($search)) {
-            $total_items = (int) $wpdb->get_var(
-                $wpdb->prepare(
-                    "SELECT COUNT(*) FROM {$table} f {$where}",
-                    ...$values
-                )
+            $total_items = (int) FormNova_Database::get_var(
+                "SELECT COUNT(*)
+                FROM %i f
+                WHERE f.title LIKE %s",
+                [
+                    $table,
+                    '%' . $wpdb->esc_like($search) . '%'
+                ]
             );
         } else {
-            $total_items = (int) $wpdb->get_var(
-                "SELECT COUNT(*) FROM {$table}"
+            $total_items = (int) FormNova_Database::get_var(
+                "SELECT COUNT(*)
+                FROM %i",
+                [
+                    $table
+                ]
             );
         }
 
@@ -140,24 +142,47 @@ class FormNova_Forms_Table extends WP_List_Table
         $values[] = $per_page;
         $values[] = $offset;
 
-        $this->items = $wpdb->get_results(
-            $wpdb->prepare(
+        if (!empty($search)) {
+            $this->items = FormNova_Database::get_results(
                 "
                 SELECT f.*, u.display_name AS author
-                FROM {$table} f
-                LEFT JOIN {$wpdb->users} u
+                FROM %i f
+                LEFT JOIN %i u
                 ON u.ID = f.user_id
-                {$where}
+                WHERE f.title LIKE %s
                 ORDER BY {$orderby} {$order}
                 LIMIT %d OFFSET %d
                 ",
-                ...$values
-            )
-        );
+                [
+                    $table,
+                    $users_table,
+                    '%' . $wpdb->esc_like($search) . '%',
+                    $per_page,
+                    $offset
+                ]
+            );
+        } else {
+            $this->items = FormNova_Database::get_results(
+                "
+                SELECT f.*, u.display_name AS author
+                FROM %i f
+                LEFT JOIN %i u
+                ON u.ID = f.user_id
+                ORDER BY {$orderby} {$order}
+                LIMIT %d OFFSET %d
+                ",
+                [
+                    $table,
+                    $users_table,
+                    $per_page,
+                    $offset
+                ]
+            );
+        }
 
         $this->set_pagination_args([
             'total_items' => $total_items,
-            'per_page'    => $per_page,
+            'per_page' => $per_page,
             'total_pages' => ceil($total_items / $per_page),
         ]);
 
@@ -232,8 +257,8 @@ class FormNova_Forms_Table extends WP_List_Table
     public function get_sortable_columns()
     {
         return [
-            'title'      => ['title', true],
-            'author'     => ['author', false],
+            'title' => ['title', true],
+            'author' => ['author', false],
             'created_at' => ['created_at', false],
         ];
     }

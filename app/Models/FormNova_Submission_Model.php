@@ -25,9 +25,9 @@ class FormNova_Submission_Model
         $result = FormNova_Database::insert(
             $this->table,
             [
-                'form_id'      => $form_id,
-                'data'         => wp_json_encode($data),
-                'ip_address'   => sanitize_text_field(
+                'form_id' => $form_id,
+                'data' => wp_json_encode($data),
+                'ip_address' => sanitize_text_field(
                     wp_unslash(
                         $_SERVER['REMOTE_ADDR'] ?? ''
                     )
@@ -75,19 +75,29 @@ class FormNova_Submission_Model
     public function get_all($form_id = null)
     {
         if (!empty($form_id)) {
+            $form_id = absint($form_id);
+
             return FormNova_Database::get_results(
                 "SELECT *
-                 FROM {$this->table}
-                 WHERE form_id = %d
-                 ORDER BY id DESC",
-                [absint($form_id)]
+                FROM %i
+                WHERE form_id = %d
+                ORDER BY id DESC",
+                [
+                    $this->table,
+                    $form_id
+                ],
+                'formnova_submissions_' . $form_id
             );
         }
 
         return FormNova_Database::get_results(
             "SELECT *
-             FROM {$this->table}
-             ORDER BY id DESC"
+            FROM %i
+            ORDER BY id DESC",
+            [
+                $this->table
+            ],
+            'formnova_all_submissions'
         );
     }
 
@@ -145,9 +155,13 @@ class FormNova_Submission_Model
 
         return FormNova_Database::get_row(
             "SELECT *
-             FROM {$this->table}
-             WHERE id = %d",
-            [$id]
+            FROM %i
+            WHERE id = %d",
+            [
+                $this->table,
+                $id
+            ],
+            'formnova_submission_' . $id
         );
     }
 }

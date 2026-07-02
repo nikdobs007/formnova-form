@@ -414,11 +414,6 @@ document.addEventListener("DOMContentLoaded", function () {
                             ).textContent =
                                 result.data.message;
 
-                            clearMessage(
-                                responseBottom,
-                                4000
-                            );
-
                             form.reset();
 
                         } else {
@@ -443,11 +438,6 @@ document.addEventListener("DOMContentLoaded", function () {
                                 ".formnova-error-box"
                             ).textContent =
                                 result.data.message;
-
-                            clearMessage(
-                                responseTop,
-                                10000
-                            );
                         }
 
                     } catch (e) {
@@ -456,12 +446,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             `<div class="formnova-error-box">
                                 Server Error
                             </div>`;
-
-                        clearMessage(
-                            responseTop,
-                            10000
-                        );
-                    }
+                       }
 
                 } catch (error) {
 
@@ -469,11 +454,6 @@ document.addEventListener("DOMContentLoaded", function () {
                         `<div class="formnova-error-box">
                             Something went wrong.
                         </div>`;
-
-                    clearMessage(
-                        responseTop,
-                        10000
-                    );
 
                 } finally {
 

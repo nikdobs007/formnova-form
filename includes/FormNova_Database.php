@@ -29,33 +29,29 @@ class FormNova_Database
         global $wpdb;
         return esc_sql($wpdb->prefix . 'formnova_submissions');
     }
-    
+
     public static function get_var(
-        $sql,
+        $query,
         $args = [],
         $cache_key = ''
     ) {
         global $wpdb;
 
         if (!empty($cache_key)) {
-            $cached = wp_cache_get(
-                $cache_key,
-                'formnova'
-            );
+            $cached = wp_cache_get($cache_key, 'formnova');
 
             if (false !== $cached) {
                 return $cached;
             }
         }
 
-        $prepared = $wpdb->prepare(
-            $sql,
-            ...$args
-        );
+        if (!empty($args)) {
+            // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+            $query = $wpdb->prepare($query, ...$args);
+        }
 
-        $result = $wpdb->get_var(
-            $prepared
-        );
+        // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
+        $result = $wpdb->get_var($query);
 
         if (!empty($cache_key)) {
             wp_cache_set(
@@ -70,31 +66,27 @@ class FormNova_Database
     }
 
     public static function get_row(
-        $sql,
+        $query,
         $args = [],
         $cache_key = ''
     ) {
         global $wpdb;
 
         if (!empty($cache_key)) {
-            $cached = wp_cache_get(
-                $cache_key,
-                'formnova'
-            );
+            $cached = wp_cache_get($cache_key, 'formnova');
 
             if (false !== $cached) {
                 return $cached;
             }
         }
 
-        $prepared = $wpdb->prepare(
-            $sql,
-            ...$args
-        );
+        if (!empty($args)) {
+            // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+            $query = $wpdb->prepare($query, ...$args);
+        }
 
-        $result = $wpdb->get_row(
-            $prepared
-        );
+        // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
+        $result = $wpdb->get_row($query);
 
         if (!empty($cache_key)) {
             wp_cache_set(
@@ -109,31 +101,27 @@ class FormNova_Database
     }
 
     public static function get_results(
-        $sql,
+        $query,
         $args = [],
         $cache_key = ''
     ) {
         global $wpdb;
 
         if (!empty($cache_key)) {
-            $cached = wp_cache_get(
-                $cache_key,
-                'formnova'
-            );
+            $cached = wp_cache_get($cache_key, 'formnova');
 
             if (false !== $cached) {
                 return $cached;
             }
         }
 
-        $prepared = $wpdb->prepare(
-            $sql,
-            ...$args
-        );
+        if (!empty($args)) {
+            // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+            $query = $wpdb->prepare($query, ...$args);
+        }
 
-        $result = $wpdb->get_results(
-            $prepared
-        );
+        // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
+        $result = $wpdb->get_results($query);
 
         if (!empty($cache_key)) {
             wp_cache_set(
@@ -151,6 +139,7 @@ class FormNova_Database
     {
         global $wpdb;
 
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
         return $wpdb->insert(
             $table,
             $data,
@@ -167,6 +156,7 @@ class FormNova_Database
     ) {
         global $wpdb;
 
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
         return $wpdb->update(
             $table,
             $data,
@@ -183,6 +173,7 @@ class FormNova_Database
     ) {
         global $wpdb;
 
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
         return $wpdb->delete(
             $table,
             $where,

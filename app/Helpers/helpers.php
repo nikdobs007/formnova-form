@@ -12,14 +12,17 @@ if (!function_exists('formnova_request')) {
 
         switch (strtolower($method)) {
             case 'get':
+                // phpcs:ignore WordPress.Security.NonceVerification.Recommended
                 $source = $_GET;
                 break;
 
             case 'post':
+                // phpcs:ignore WordPress.Security.NonceVerification.Missing
                 $source = $_POST;
                 break;
 
             default:
+                // phpcs:ignore WordPress.Security.NonceVerification.Recommended
                 $source = $_REQUEST;
                 break;
         }

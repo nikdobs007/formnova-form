@@ -24,17 +24,18 @@ class FormNova_FieldMetaModel
 
         return FormNova_Database::get_row(
             "SELECT *
-            FROM {$this->table}
+            FROM %i
             WHERE field_id = %d",
-            [$field_id],
+            [
+                $this->table,
+                $field_id
+            ],
             'field_meta_' . $field_id
         );
     }
 
     public function save($field_id, $data)
     {
-        global $wpdb;
-
         $field_id = absint($field_id);
 
         if (!$field_id) {
@@ -46,9 +47,12 @@ class FormNova_FieldMetaModel
          */
         $exists = FormNova_Database::get_var(
             "SELECT id
-            FROM {$this->table}
+            FROM %i
             WHERE field_id = %d",
-            [$field_id],
+            [
+                $this->table,
+                $field_id
+            ],
             'field_meta_exists_' . $field_id
         );
 
@@ -102,8 +106,6 @@ class FormNova_FieldMetaModel
 
     public function delete($field_id)
     {
-        global $wpdb;
-
         $field_id = absint($field_id);
 
         if (!$field_id) {
@@ -112,9 +114,12 @@ class FormNova_FieldMetaModel
 
         $meta_id = FormNova_Database::get_var(
             "SELECT id
-            FROM {$this->table}
+            FROM %i
             WHERE field_id = %d",
-            [$field_id],
+            [
+                $this->table,
+                $field_id
+            ],
             'field_meta_exists_' . $field_id
         );
 
@@ -124,8 +129,12 @@ class FormNova_FieldMetaModel
 
         $result = FormNova_Database::delete(
             $this->table,
-            ['id' => absint($meta_id)],
-            ['%d']
+            [
+                'id' => absint($meta_id)
+            ],
+            [
+                '%d'
+            ]
         );
 
         /*

@@ -17,9 +17,11 @@ class FormNova_Form_Model
     {
         return FormNova_Database::get_results(
             "SELECT *
-        FROM {$this->table}
-        ORDER BY id DESC",
-            [],
+            FROM %i
+            ORDER BY id DESC",
+            [
+                $this->table
+            ],
             'all_forms'
         );
     }
@@ -34,9 +36,12 @@ class FormNova_Form_Model
 
         return FormNova_Database::get_row(
             "SELECT *
-        FROM {$this->table}
-        WHERE id=%d",
-            [$id],
+            FROM %i
+            WHERE id = %d",
+            [
+                $this->table,
+                $id
+            ],
             'form_' . $id
         );
     }
@@ -181,9 +186,12 @@ class FormNova_Form_Model
 
         $row = FormNova_Database::get_var(
             "SELECT settings
-        FROM {$this->table}
-        WHERE id=%d",
-            [$form_id],
+            FROM %i
+            WHERE id = %d",
+            [
+                $this->table,
+                $form_id
+            ],
             'form_settings_' . $form_id
         );
 

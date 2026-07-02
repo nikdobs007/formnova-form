@@ -84,8 +84,11 @@ Yes. FormNova stores and manages all submissions.
 
 1. Drag & Drop Form Builder
 2. Frontend Form Preview
-3. Submission Management
-4. Analytics Dashboard
+3. Add new form
+4. All form list
+5. All submission list 
+6. View submission
+7. Settings
 
 == Changelog ==
 

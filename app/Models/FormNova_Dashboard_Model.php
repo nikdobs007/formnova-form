@@ -11,8 +11,8 @@ class FormNova_Dashboard_Model
         $table = FormNova_Database::forms_table();
 
         return (int) FormNova_Database::get_var(
-            "SELECT COUNT(*) FROM {$table}",
-            [],
+            "SELECT COUNT(*) FROM %i",
+            [$table],
             'formnova_total_forms'
         );
     }
@@ -22,8 +22,8 @@ class FormNova_Dashboard_Model
         $table = FormNova_Database::submissions_table();
 
         return (int) FormNova_Database::get_var(
-            "SELECT COUNT(*) FROM {$table}",
-            [],
+            "SELECT COUNT(*) FROM %i",
+            [$table],
             'formnova_total_submissions'
         );
     }
@@ -33,10 +33,8 @@ class FormNova_Dashboard_Model
         $table = FormNova_Database::submissions_table();
 
         return (int) FormNova_Database::get_var(
-            "SELECT COUNT(*)
-         FROM {$table}
-         WHERE DATE(submitted_at) = CURDATE()",
-            [],
+            "SELECT COUNT(*) FROM %i WHERE DATE(submitted_at) = CURDATE()",
+            [$table],
             'formnova_today_submissions'
         );
     }
@@ -46,10 +44,10 @@ class FormNova_Dashboard_Model
         $table = FormNova_Database::submissions_table();
 
         return (int) FormNova_Database::get_var(
-            "SELECT COUNT(*)
-         FROM {$table}
-         WHERE submitted_at >= DATE_SUB(NOW(), INTERVAL 7 DAY)",
-            [],
+            "SELECT COUNT(*) 
+             FROM %i
+             WHERE submitted_at >= DATE_SUB(NOW(), INTERVAL 7 DAY)",
+            [$table],
             'formnova_last_7_days_submissions'
         );
     }
@@ -59,13 +57,12 @@ class FormNova_Dashboard_Model
         $table = FormNova_Database::submissions_table();
 
         return FormNova_Database::get_row(
-            "SELECT form_id,
-                COUNT(*) AS total
-         FROM {$table}
-         GROUP BY form_id
-         ORDER BY total DESC
-         LIMIT 1",
-            [],
+            "SELECT form_id, COUNT(*) AS total
+             FROM %i
+             GROUP BY form_id
+             ORDER BY total DESC
+             LIMIT 1",
+            [$table],
             'formnova_top_form'
         );
     }
